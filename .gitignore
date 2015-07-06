@@ -1,0 +1,7 @@
+node_modules
+.DS_Store*
+.hubot_history
+.bash_history
+.config/configstore/insight-yo.json
+.node-gyp
+.npm
