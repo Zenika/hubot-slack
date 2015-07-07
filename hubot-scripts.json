@@ -1,3 +1,4 @@
 [
-  "github-credentials.coffee"
+  "github-credentials.coffee",
+  "github-activity.coffee"
 ]
