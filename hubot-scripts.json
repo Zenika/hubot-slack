@@ -1,4 +1,18 @@
 [
   "github-credentials.coffee",
-  "github-activity.coffee"
+  "github-activity.coffee",
+  "applause.coffee",
+  "beerme.coffee",
+  "coin.coffee",
+  "commitmessage.coffee",
+  "countdown.coffee",
+  "cowsay.coffee",
+  "dealwithit.coffee",
+  "decide.coffee",
+  "dice.coffee",
+  "kittens.coffee",
+  "nickgen.coffee",
+  "slogan.coffee",
+  "xkcd.coffee",
+  "yell.coffee"
 ]
