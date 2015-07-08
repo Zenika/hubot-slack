@@ -37,7 +37,7 @@ Then you can interact with ZBot by typing `ZBot help`.
 ### Scripting
 
 An example script is included at `scripts/example.coffee`, so check it out to
-get started, along with the [Scripting Guide](scripting-docs).
+get started, along with the [Scripting Guide](https://hubot.github.com/docs/scripting/).
 
 For many common tasks, there's a good chance someone has already one to do just
 the thing.
