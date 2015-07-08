@@ -28,9 +28,15 @@ buildNewIssueOrPRMessage = (data, eventType, callback) ->
       mentioned_line = extractMentionsFromBody(pr_or_issue.body)
     callback "New #{eventType.replace('_', ' ')} \"#{pr_or_issue.title}\" by #{pr_or_issue.user.login}: #{pr_or_issue.html_url}#{mentioned_line}"
 
+handleIssue = (data, callback) ->
+  if data.action == 'opened'
+    callback "New issue \"#{data.issue.title}\" by #{data.issue.user.login}: #{data.issue.html_url}\n#{data.issue.body}"
+  else if data.action == 'closed'
+    callback "Issue \"#{data.issue.title}\" closed by #{data.issue.user.login}: #{data.issue.html_url}"
+
 module.exports =
   issues: (data, callback) ->
-    buildNewIssueOrPRMessage(data, 'issue', callback)
+    handleIssue(data, callback)
 
   pull_request: (data, callback) ->
     buildNewIssueOrPRMessage(data, 'pull_request', callback)
@@ -44,5 +50,5 @@ module.exports =
         callback "Page build for #{data.repository.full_name} errored: #{build.error.message}."
 
   issue_comment: (data, callback) ->
-    callback "New comment on issue by #{data.comment.user.login}: #{data.comment.html_url}\n#{data.comment.body}"
+    callback "New comment on issue \"#{data.issue.title}\" by #{data.comment.user.login}: #{data.comment.html_url}\n#{data.comment.body}"
 
