@@ -1,9 +1,9 @@
 # Description:
 #   Add a reaction for a regex
 # Commands:
-#   hubot reaction add <emoji> <regex> - add an error to fear
+#   hubot reaction add <:emoji:> <regex> - add a reaction for the specified regex (case insensitive)
 #   hubot reaction audittrails - list audit trails
-#   hubot reaction list - list the feared errors
+#   hubot reaction list - list the reactions
 #   hubot reaction remove <#> - remove the reaction at the specified id
 
 module.exports = (reaction) ->
@@ -50,7 +50,7 @@ module.exports = (reaction) ->
                 callback(body)
               return
 
-  reaction.respond /reaction\s+add\s+([^\s]+)\s+(.*)$/, (res) ->
+  reaction.respond /reaction\s+add\s+:([^:]+):\s+(.*)$/, (res) ->
     message = res.message
     react message.rawMessage.channel, message.rawMessage.ts, res.match[1], (body) ->
       result = JSON.parse(body)
