@@ -77,7 +77,7 @@ module.exports = (reaction) ->
     i = 0
     buffer = 'current rules: \n'
     for r in reactions.list
-      buffer += '#' + i++ + ':' + r.e + ':\t' + r.r '\n'
+      buffer += '#' + i++ + ':' + r.e + ':\t' + r.r + '\n'
     res.send buffer
 
   reaction.respond /reaction\s+remove\s([0-9]+)$/, (res) ->
