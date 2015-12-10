@@ -1,9 +1,9 @@
 # Description:
 #   Add a reaction for a regex
 # Commands:
-#   hubot reaction add <emoji> <regex> - add an error to fear
+#   hubot reaction add <:emoji:> <regex> - add a reaction for the specified regex (case insensitive)
 #   hubot reaction audittrails - list audit trails
-#   hubot reaction list - list the feared errors
+#   hubot reaction list - list the reactions
 #   hubot reaction remove <#> - remove the reaction at the specified id
 
 module.exports = (reaction) ->
@@ -15,10 +15,8 @@ module.exports = (reaction) ->
     if reactions?
       return
 
-    r = reaction.brain.get('reactions')
-    if r?
-      reactions = JSON.parse(r)
-    else
+    reactions = reaction.brain.data.reactions or null
+    if reactions == null
       reactions = {list: [], audittrails: []}
       storeConfiguration()
     
@@ -28,7 +26,7 @@ module.exports = (reaction) ->
 
 
   storeConfiguration = () ->
-    reaction.brain.set('reactions', JSON.stringify(reactions))
+    reaction.brain.data.reactions = reactions
 
   audittrail = (who, what) ->
     oneMonthAgo = new Date()
@@ -50,7 +48,7 @@ module.exports = (reaction) ->
                 callback(body)
               return
 
-  reaction.respond /reaction\s+add\s+([^\s]+)\s+(.*)$/, (res) ->
+  reaction.respond /reaction\s+add\s+:([^:]+):\s+(.*)$/, (res) ->
     message = res.message
     react message.rawMessage.channel, message.rawMessage.ts, res.match[1], (body) ->
       result = JSON.parse(body)
@@ -92,6 +90,4 @@ module.exports = (reaction) ->
     for candidate in cache
       if message.match candidate.r
         react message.rawMessage.channel, message.rawMessage.ts, candidate.e
-
-  loadConfiguration()
 
