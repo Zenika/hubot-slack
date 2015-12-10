@@ -15,10 +15,8 @@ module.exports = (reaction) ->
     if reactions?
       return
 
-    r = reaction.brain.get('reactions')
-    if r?
-      reactions = JSON.parse(r)
-    else
+    reactions = reaction.brain.data.reactions or null
+    if reactions == null
       reactions = {list: [], audittrails: []}
       storeConfiguration()
     
@@ -28,7 +26,7 @@ module.exports = (reaction) ->
 
 
   storeConfiguration = () ->
-    reaction.brain.set('reactions', JSON.stringify(reactions))
+    reaction.brain.data.reactions = reactions
 
   audittrail = (who, what) ->
     oneMonthAgo = new Date()
@@ -92,6 +90,4 @@ module.exports = (reaction) ->
     for candidate in cache
       if message.match candidate.r
         react message.rawMessage.channel, message.rawMessage.ts, candidate.e
-
-  loadConfiguration()
 
