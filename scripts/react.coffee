@@ -46,6 +46,9 @@ module.exports = (reaction) ->
                   '&channel=' + channel + 
                   '&timestamp=' + ts)
             .get()  (err, res, body) ->
+              if body and body.ok == "false"
+                console.log body
+              
               if callback?
                 callback(body)
               return
@@ -65,13 +68,17 @@ module.exports = (reaction) ->
 
 
   reaction.respond /reaction\s+audittrails$/, (res) ->
+    buffer = 'audit trails: \n'
     for a in reactions.audittrails
-      res.send a.when + ' / ' + a.who + ': ' + a.what
+      buffer += a.when + ' / ' + a.who + ': ' + a.what + '\n'
+    res.send buffer
 
   reaction.respond /reaction\s+list$/, (res) ->
     i = 0
+    buffer = 'current rules: \n'
     for r in reactions.list
-      res.send '#' + i++ + ':' + r.e + ':\t' + r.r
+      buffer += '#' + i++ + ':' + r.e + ':\t' + r.r '\n'
+    res.send buffer
 
   reaction.respond /reaction\s+remove\s([0-9]+)$/, (res) ->
     index = new Number(res.match[1])
