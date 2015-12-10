@@ -22,7 +22,7 @@ module.exports = (reaction) ->
     
     cache = []
     for candidate in reactions.list
-      cache.push({e: candidate.e, r: new RegExp(candidate.m, 'i')})
+      cache.push({e: candidate.e, r: new RegExp(candidate.r, 'i')})
 
 
   storeConfiguration = () ->
@@ -31,9 +31,11 @@ module.exports = (reaction) ->
   audittrail = (who, what) ->
     oneMonthAgo = new Date()
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
-    while reactions.audittrails.length > 0 and reactions.audittrails[0].when.getTime() < oneMonthAgo.getTime()
+    oneMonthAgo = oneMonthAgo.getTime()
+
+    while reactions.audittrails.length > 0 and reactions.audittrails[0].when < oneMonthAgo
       reactions.audittrails.splice(0, 1)
-    reactions.audittrails.push {when: new Date(), who: who, what: what}
+    reactions.audittrails.push {when: new Date().getTime(), who: who, what: what}
     
   reaction.brain.on 'loaded', ->
     loadConfiguration()
