@@ -2,7 +2,7 @@
 #   The bot will count and display some stats about the emoji.
 # Commands:
 #   hubot rstat - Give the reactions stats for the current channel
-#   hubot rstat user <@user> - Give the current channel's reactions stats for <@user>
+#   hubot rstat user <@user> - Give the current channel's reactions stats used to react at <@user> messages
 #   hubot rstat limit <number> - Set the displayed emoji's limit.
 
 module.exports = (robot) ->
